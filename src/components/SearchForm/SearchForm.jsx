@@ -1,10 +1,31 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
 import { FiSearch } from 'react-icons/fi';
 import { FormBtn, InputSearch, SearchFormStyled } from './SearchForm.styled';
 
-export class SearchForm extends Component {
-  render() {
-    return <h2>SearchForm</h2>;
-  }
-}
+export const SearchForm = ({ onSubmit }) => {
+  const onSubmitForm = evt => {
+    evt.preventDefault();
+
+    const value = evt.target.search.value.trim();
+    if (!value) return;
+
+    onSubmit(value);
+
+    evt.target.reset();
+  };
+
+  return (
+    <SearchFormStyled onSubmit={onSubmitForm}>
+      <FormBtn type="submit">
+        <FiSearch size="16px" />
+      </FormBtn>
+      <InputSearch
+        placeholder="What do you want to write?"
+        name="search"
+        required
+        autoFocus
+      />
+    </SearchFormStyled>
+  );
+};
